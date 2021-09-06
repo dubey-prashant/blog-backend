@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="dubeyTech" />
+  <meta name="theme-color" content="#215db6">
+  <title>dubeyTech</title>
+</head>
+
+<body>
+  <noscript>JavaScript is disabled on your Browser. Please enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+  </script>
+  <script>
+    // Navbar
+    $(function () {
+      $("#ham-icon").on("click", function () {
+        $(this).toggleClass("open")
+        $(".nav").toggleClass("showNav")
+      })
+    });
+  </script>
+</body>
+
+</html>
