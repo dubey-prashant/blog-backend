@@ -99,16 +99,3 @@ passport.use(
         })
     })
 ) //  GOOGLE STRATEGY END
-
-//  SERIALIZE USER
-passport.serializeUser((user, done) => {
-  return done(null, user.id)
-})
-
-//  DESERIALIZE USER
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    if (err) return done(err)
-    if (user) return done(null, user)
-  })
-})
