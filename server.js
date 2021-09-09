@@ -9,7 +9,9 @@ const cors = require('cors')
 
 const app = express()
 app.use(express.json())
+
 if (process.env.NODE_ENV !== 'production') app.use(cors())
+
 //  @mongoDB: connect to database
 mongoose.connect(process.env.MONGO_DB_URL,
   { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
@@ -26,8 +28,10 @@ app.use(
     saveUninitialized: false
   })
 )
+
 app.use(passport.initialize())
 app.use(passport.session())
+import "./configs/passportConfig"
 
 //  @routes
 app.use('/api/articles', articlesRoute)
