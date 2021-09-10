@@ -30,16 +30,20 @@ router.post('/register',
 )
 
 router.post('/login',
-  passport.authenticate('login', { session: false })
+  (req, res, next) => {
+    authorizeJWT('login', {}, req, res, next)
+  }
 )
 
 // @GOOGLE Oauth authentication
 router.get('/google',
   passport.authenticate('google', { session: false, scope: ['profile', 'email'] })
 )
+
 router.get('/google/redirect',
-  //TODO - add create jwt
-  passport.authenticate('google', { session: false })
+  (req, res, next) => {
+    authorizeJWT('google', {}, req, res, next)
+  }
 )
 
 // @LOGOUT - TODO

@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const Article = require('./../models/Article')
+const verifyJWT = require('../configs/verifyJWT')
 
 // @GET All articles
-router.get('/', (req, res) => {
+router.get('/', verifyJWT, (req, res) => {
   Article.find({}, (err, articles) => {
     err
       ? //error message

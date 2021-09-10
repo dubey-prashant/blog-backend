@@ -9,3 +9,23 @@ Content-Type: application/json
   "email": "abcde@def.ghi",
   "pass":"12345678"
 }
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "abcde@def.ghi",
+  "pass":"12345678"
+}
+
+### Google 
+GET {{baseUrl}}/auth/google
+
+### Google redirect
+GET {{baseUrl}}/auth/google/redirect
+
+### test
+
+GET {{baseUrl}}/api/articles
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJ1c2VyLl9pZCIsImlhdCI6MTYzMTI2NDU4Nn0.NARFWS03S0pnL6Gncz9TxsW-9Ia7oGCXjE_oUsmYZ0U
