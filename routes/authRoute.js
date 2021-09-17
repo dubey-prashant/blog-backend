@@ -1,6 +1,10 @@
 const router = require('express').Router()
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const { OAuth2Client } = require('google-auth-library')
+const gClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const User = require('../models/User')
+
 
 const authorizeJWT = (strategy, options, req, res, next) => {
   passport.authenticate(
@@ -36,14 +40,48 @@ router.post('/login',
 )
 
 // @GOOGLE Oauth authentication
-router.get('/google',
-  passport.authenticate('google', { session: false, scope: ['profile', 'email'] })
-)
+router.post('/google', (req, res) => {
 
-router.get('/google/redirect',
-  (req, res, next) => {
-    authorizeJWT('google', {}, req, res, next)
-  }
+  const { idToken } = req.body
+
+  gClient.verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID }).then(verifiedUser => {
+
+    const { sub: googleId, name, email, email_verified, picture: profileImg } = verifiedUser.getPayload()
+
+    if (email_verified) {
+
+      User.findOne({ email }, (err, exUser) => {
+        if (err) {
+          console.log(err)
+        }
+        if (!err) {
+
+          if (exUser) {
+            const authToken = jwt.sign(
+              { _id: exUser._id },
+              process.env.JWT_SECRET
+            )
+            return res.json({ authToken })
+          }
+          if (!exUser) {
+            User.create({
+              name, email, profileImg, googleId
+            }).then(newUser => {
+              const authToken = jwt.sign(
+                { _id: newUser._id },
+                process.env.JWT_SECRET
+              )
+              return res.json({ authToken })
+            }).catch(err => {
+              console.log(err)
+            })
+          }
+        }
+      })
+    }
+  })
+
+}
 )
 
 // @LOGOUT - TODO

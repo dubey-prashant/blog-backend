@@ -3,7 +3,7 @@ const Article = require('./../models/Article')
 const verifyJWT = require('../configs/verifyJWT')
 
 // @GET All articles
-router.get('/', verifyJWT, (req, res) => {
+router.get('/', (req, res) => {
   Article.find({}, (err, articles) => {
     err
       ? //error message
@@ -14,7 +14,7 @@ router.get('/', verifyJWT, (req, res) => {
 })
 
 // @GET One article with articleId
-router.get('/:articleId', (req, res) => {
+router.get('/:articleId', verifyJWT, (req, res) => {
   Article.findById(req.params.articleId, (err, article) => {
     err
       ? res.json({ error: err.message })

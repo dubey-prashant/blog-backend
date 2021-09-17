@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   pass: String,
-  img: String,
+  profileImg: String,
   googleId: String,
   githubId: String
 })
