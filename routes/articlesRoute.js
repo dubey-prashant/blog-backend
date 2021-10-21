@@ -2,7 +2,7 @@ const router = require('express').Router()
 const Article = require('./../models/Article')
 const verifyJWT = require('../configs/verifyJWT')
 
-// @GET All articles
+// todo @GET All articles
 router.get('/', (req, res) => {
   Article.find({}, (err, articles) => {
     err
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 })
 
 // @GET One article with articleId
-router.get('/:articleId', verifyJWT, (req, res) => {
+router.get('/:articleId', (req, res) => {
   Article.findById(req.params.articleId, (err, article) => {
     err
       ? res.json({ error: err.message })
